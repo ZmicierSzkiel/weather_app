@@ -1,31 +1,31 @@
-part of 'home_bloc.dart';
+part of 'forecast_bloc.dart';
 
-enum HomeStatus {
+enum ForecastStatus {
   loading,
   success,
   failure,
 }
 
-class HomeState extends Equatable {
-  final HomeStatus status;
+class ForecastState extends Equatable {
+  final ForecastStatus status;
   final String errorMessage;
   final List<WeatherData> weatherDataList;
   final City city;
 
-  const HomeState({
+  const ForecastState({
     required this.status,
     required this.errorMessage,
     required this.weatherDataList,
     required this.city,
   });
 
-  HomeState copyWith({
-    HomeStatus? status,
+  ForecastState copyWith({
+    ForecastStatus? status,
     String? errorMessage,
     List<WeatherData>? weatherDataList,
     City? city,
   }) {
-    return HomeState(
+    return ForecastState(
       status: status ?? this.status,
       errorMessage: errorMessage ?? this.errorMessage,
       weatherDataList: weatherDataList ?? this.weatherDataList,

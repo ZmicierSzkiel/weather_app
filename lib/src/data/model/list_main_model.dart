@@ -14,7 +14,7 @@ class ListMainModel extends ListMain {
     Map<String, dynamic> json,
   ) {
     return ListMainModel(
-      temperature: json['temp'],
+      temperature: json['temp'].toDouble(),
       feelsLike: json['feels_like'].toDouble(),
       pressure: json['pressure'],
       seaLevel: json['sea_level'],

@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:http/http.dart' as http;
+import 'package:weather_app/src/core/urls.dart';
 
 import 'package:weather_app/src/data/model/city_model.dart';
 import 'package:weather_app/src/data/model/weather_data_model.dart';
@@ -22,7 +23,7 @@ class WeatherRepositoryProvider {
         'Content-Type': 'x-www-form-urlencoded',
       };
       final Uri uri = Uri.https(
-        'api.openweathermap.org',
+        Urls.baseUrl,
         '/data/2.5/forecast',
         {
           'lat': position.latitude.toString(),
@@ -35,21 +36,26 @@ class WeatherRepositoryProvider {
         uri,
         headers: headers,
       );
-      final List<dynamic> forecastData = jsonDecode(response.body)['list'];
-      final City cityData = CityModel.fromJson(
-        jsonDecode(response.body)['city'],
-      );
-      final List<WeatherData> weatherDataList = forecastData
-          .map(
-            (e) => WeatherDataModel.fromJson(e),
-          )
-          .toList();
-      final WeatherApiResponse weatherApiResponse = WeatherApiResponse(
-        weatherDataList: weatherDataList,
-        cityData: cityData,
-      );
-      return weatherApiResponse;
+      if (response.statusCode == 200) {
+        final List<dynamic> forecastData = jsonDecode(response.body)['list'];
+        final City cityData = CityModel.fromJson(
+          jsonDecode(response.body)['city'],
+        );
+        final List<WeatherData> weatherDataList = forecastData
+            .map(
+              (e) => WeatherDataModel.fromJson(e),
+            )
+            .toList();
+        final WeatherApiResponse weatherApiResponse = WeatherApiResponse(
+          weatherDataList: weatherDataList,
+          cityData: cityData,
+        );
+        return weatherApiResponse;
+      } else {
+        throw Exception('Failed to load weather data');
+      }
     } catch (e) {
+      print(e.toString());
       throw Exception(e.toString());
     }
   }

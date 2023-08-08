@@ -1,4 +1,5 @@
 import 'package:weather_app/src/data/model/list_main_model.dart';
+import 'package:weather_app/src/data/model/list_rain_model.dart';
 import 'package:weather_app/src/data/model/list_weather_model.dart';
 import 'package:weather_app/src/data/model/list_wind_model.dart';
 import 'package:weather_app/src/domain/entity/weather_data.dart';
@@ -10,6 +11,8 @@ class WeatherDataModel extends WeatherData {
     required super.listWeather,
     required super.listWind,
     required super.probability,
+    super.listRain,
+    required super.dateTimeText,
   });
 
   factory WeatherDataModel.fromJson(
@@ -21,6 +24,9 @@ class WeatherDataModel extends WeatherData {
       listWeather: ListWeatherModel.fromJson(json['weather']),
       listWind: ListWindModel.fromJson(json['wind']),
       probability: json['pop'].toDouble(),
+      listRain:
+          json['rain'] != null ? ListRainModel.fromJson(json['rain']) : null,
+      dateTimeText: json['dt_txt'],
     );
   }
 }

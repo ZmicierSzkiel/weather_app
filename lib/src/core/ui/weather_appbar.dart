@@ -10,9 +10,33 @@ class WeatherAppBar extends StatelessWidget implements PreferredSizeWidget {
 
   @override
   Widget build(BuildContext context) {
-    return AppBar(
-      title: Text(title),
-      centerTitle: true,
+    return Container(
+      decoration: const BoxDecoration(
+        border: Border(
+          bottom: BorderSide(
+            color: Colors.transparent, // Use transparent color for top border
+            width: 3.0,
+          ),
+        ),
+        gradient: LinearGradient(
+          colors: [
+            Colors.red,
+            Colors.orange,
+            Colors.yellow,
+            Colors.green,
+            Colors.blue,
+            Colors.indigo,
+            Colors.purple,
+          ],
+          begin: Alignment.topLeft,
+          end: Alignment.topRight,
+        ),
+      ),
+      child: AppBar(
+        title: Text(title),
+        centerTitle: true,
+        elevation: 0,
+      ),
     );
   }
 

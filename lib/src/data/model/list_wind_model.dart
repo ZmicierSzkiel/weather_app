@@ -11,9 +11,9 @@ class ListWindModel extends ListWind {
     Map<String, dynamic> json,
   ) {
     return ListWindModel(
-      speed: json['speed'],
-      degrees: json['deg'],
-      gust: json['gust'],
+      speed: json['speed'].toDouble(),
+      degrees: json['deg'].toDouble(),
+      gust: json['gust'].toDouble(),
     );
   }
 }

@@ -4,28 +4,27 @@ import 'package:geolocator/geolocator.dart';
 import 'package:weather_app/src/core/use_case.dart';
 import 'package:weather_app/src/domain/entity/city.dart';
 import 'package:weather_app/src/domain/entity/weather_api_response.dart';
-import 'package:weather_app/src/domain/use_case/get_weather_usecase.dart';
+import 'package:weather_app/src/domain/entity/weather_data.dart';
+import 'package:weather_app/src/domain/use_case/get_weather_data_usecase.dart';
 
 part 'home_event.dart';
 part 'home_state.dart';
 
 class HomeBloc extends Bloc<HomeEvent, HomeState> {
-  final GetWeatherUseCase _getWeatherUseCase;
+  final GetWeatherDataUseCase _getWeatherDataUseCase;
 
   HomeBloc({
-    required GetWeatherUseCase getWeatherUseCase,
-  })  : _getWeatherUseCase = getWeatherUseCase,
+    required GetWeatherDataUseCase getWeatherDataUseCase,
+  })  : _getWeatherDataUseCase = getWeatherDataUseCase,
         super(
           HomeState(
             status: HomeStatus.loading,
             errorMessage: '',
-            weatherData: WeatherApiResponse(
-              weatherDataList: [],
-              cityData: City(
-                id: 0,
-                name: 'name',
-                country: 'country',
-              ),
+            weatherDataList: const [],
+            city: City(
+              id: 0,
+              name: '',
+              country: '',
             ),
           ),
         ) {
@@ -83,11 +82,12 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
 
     try {
       final WeatherApiResponse weatherData =
-          await _getWeatherUseCase.execute(NoParams());
+          await _getWeatherDataUseCase.execute(NoParams());
       emit(
         state.copyWith(
           status: HomeStatus.success,
-          weatherData: weatherData,
+          weatherDataList: weatherData.weatherDataList,
+          city: weatherData.cityData,
         ),
       );
     } catch (e) {
