@@ -12,11 +12,16 @@ class WeatherDetailsItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: [
-        icon,
-        Text(value),
-      ],
+    return Padding(
+      padding: const EdgeInsets.symmetric(
+        horizontal: 10.0,
+      ),
+      child: Column(
+        children: [
+          icon,
+          Text(value),
+        ],
+      ),
     );
   }
 }
