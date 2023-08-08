@@ -14,7 +14,7 @@ class WeatherAppBar extends StatelessWidget implements PreferredSizeWidget {
       decoration: const BoxDecoration(
         border: Border(
           bottom: BorderSide(
-            color: Colors.transparent, // Use transparent color for top border
+            color: Colors.transparent,
             width: 3.0,
           ),
         ),

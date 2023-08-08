@@ -1,11 +1,11 @@
-class ListMain {
+class CurrentWeatherDataMain {
   final double temperature;
   final double feelsLike;
   final int pressure;
   final int seaLevel;
   final int groundLevel;
   final double humidity;
-  ListMain({
+  CurrentWeatherDataMain({
     required this.temperature,
     required this.feelsLike,
     required this.pressure,

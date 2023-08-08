@@ -1,17 +1,16 @@
-import 'package:weather_app/src/data/model/list_main_model.dart';
-import 'package:weather_app/src/data/model/list_rain_model.dart';
-import 'package:weather_app/src/data/model/list_weather_model.dart';
-import 'package:weather_app/src/data/model/list_wind_model.dart';
+import 'package:weather_app/src/data/model/current_weather_data_main_model.dart';
+import 'package:weather_app/src/data/model/current_weather_data_rain_model.dart';
+import 'package:weather_app/src/data/model/current_weather_data_weather_model.dart';
+import 'package:weather_app/src/data/model/current_weather_data_wind_model.dart';
 import 'package:weather_app/src/domain/entity/weather_data.dart';
 
 class WeatherDataModel extends WeatherData {
   WeatherDataModel({
-    required super.dateTime,
-    required super.listMain,
-    required super.listWeather,
-    required super.listWind,
+    required super.currentWeatherDataMain,
+    required super.currentWeatherDataWeather,
+    required super.currentWeatherDataWind,
     required super.probability,
-    super.listRain,
+    super.currentWeatherDataRain,
     required super.dateTimeText,
   });
 
@@ -19,13 +18,16 @@ class WeatherDataModel extends WeatherData {
     Map<String, dynamic> json,
   ) {
     return WeatherDataModel(
-      dateTime: json['dt'],
-      listMain: ListMainModel.fromJson(json['main']),
-      listWeather: ListWeatherModel.fromJson(json['weather']),
-      listWind: ListWindModel.fromJson(json['wind']),
+      currentWeatherDataMain:
+          CurrentWeatherDataMainModel.fromJson(json['main']),
+      currentWeatherDataWeather:
+          CurrentWeatherDataWeatherModel.fromJson(json['weather']),
+      currentWeatherDataWind:
+          CurrentWeatherDataWindModel.fromJson(json['wind']),
       probability: json['pop'].toDouble(),
-      listRain:
-          json['rain'] != null ? ListRainModel.fromJson(json['rain']) : null,
+      currentWeatherDataRain: json['rain'] != null
+          ? CurrentWeatherDataRainModel.fromJson(json['rain'])
+          : null,
       dateTimeText: json['dt_txt'],
     );
   }

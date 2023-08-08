@@ -1,7 +1,7 @@
-import 'package:weather_app/src/domain/entity/list_main.dart';
+import 'package:weather_app/src/domain/entity/current_weather_data_main.dart';
 
-class ListMainModel extends ListMain {
-  ListMainModel({
+class CurrentWeatherDataMainModel extends CurrentWeatherDataMain {
+  CurrentWeatherDataMainModel({
     required super.temperature,
     required super.feelsLike,
     required super.pressure,
@@ -10,10 +10,10 @@ class ListMainModel extends ListMain {
     required super.humidity,
   });
 
-  factory ListMainModel.fromJson(
+  factory CurrentWeatherDataMainModel.fromJson(
     Map<String, dynamic> json,
   ) {
-    return ListMainModel(
+    return CurrentWeatherDataMainModel(
       temperature: json['temp'].toDouble(),
       feelsLike: json['feels_like'].toDouble(),
       pressure: json['pressure'],

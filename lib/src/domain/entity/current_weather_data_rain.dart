@@ -1,7 +1,7 @@
-class ListRain {
+class CurrentWeatherDataRain {
   final double precipitation;
 
-  ListRain({
+  CurrentWeatherDataRain({
     required this.precipitation,
   });
 }

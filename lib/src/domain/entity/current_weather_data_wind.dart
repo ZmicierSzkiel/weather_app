@@ -1,8 +1,8 @@
-class ListWind {
+class CurrentWeatherDataWind {
   final double speed;
   final double degrees;
   final double gust;
-  ListWind({
+  CurrentWeatherDataWind({
     required this.speed,
     required this.degrees,
     required this.gust,

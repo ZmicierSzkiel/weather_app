@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:weather_app/src/presentation/home/widgets/weather_details_item.dart';
 
 class WeatherDetails extends StatelessWidget {
   final double humidity;
@@ -23,14 +24,33 @@ class WeatherDetails extends StatelessWidget {
       children: [
         Wrap(
           alignment: WrapAlignment.center,
-          spacing: 20.0,
-          runSpacing: 10.0,
+          spacing: 70.0,
+          runSpacing: 20.0,
           children: [
-            Text('Humidity: ${humidity.round()}%'),
-            Text('Rain: ${precipitation.ceil()} mm'),
-            Text('Pressure: $pressure hPa'),
-            Text('Wind: $windSpeed km/h'),
-            Text('Direction: $windDirection'),
+            WeatherDetailsItem(
+              icon: const Icon(
+                Icons.cloud_outlined,
+              ),
+              value: '${humidity.round()}%',
+            ),
+            WeatherDetailsItem(
+              icon: const Icon(
+                Icons.water_drop_outlined,
+              ),
+              value: '${precipitation.ceil()} mm',
+            ),
+            WeatherDetailsItem(
+              icon: const Icon(Icons.thermostat_outlined),
+              value: '$pressure hPa',
+            ),
+            WeatherDetailsItem(
+              icon: const Icon(Icons.air_outlined),
+              value: '$windSpeed km/h',
+            ),
+            WeatherDetailsItem(
+              icon: const Icon(Icons.explore_outlined),
+              value: windDirection,
+            ),
           ],
         ),
       ],

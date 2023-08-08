@@ -1,12 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:share_plus/share_plus.dart';
+
 import 'package:weather_app/src/core/ui/app_circular_progress_indicator.dart';
-import 'package:weather_app/src/core/ui/constants.dart';
-import 'package:weather_app/src/core/urls.dart';
 import 'package:weather_app/src/core/ui/app_divider.dart';
 import 'package:weather_app/src/core/ui/app_text_button.dart';
+import 'package:weather_app/src/core/ui/constants.dart';
 import 'package:weather_app/src/core/ui/weather_appbar.dart';
+import 'package:weather_app/src/core/urls.dart';
 import 'package:weather_app/src/domain/entity/weather_data.dart';
 import 'package:weather_app/src/presentation/forecast/forecast.dart';
 import 'package:weather_app/src/presentation/home/bloc/home_bloc.dart';
@@ -40,7 +41,9 @@ class HomeScreen extends StatelessWidget {
         } else if (state.weatherDataList.isNotEmpty) {
           final WeatherData currentWeatherData = state.weatherDataList.first;
           final String message =
-              'Weather in ${state.city.name}, ${state.city.country} is ${currentWeatherData.listMain.temperature}°C | ${currentWeatherData.listWeather.main}';
+              '''Weather in ${state.city.name}, ${state.city.country}'''
+              ''' is ${currentWeatherData.currentWeatherDataMain.temperature}°C'''
+              ''' | ${currentWeatherData.currentWeatherDataWeather.main}''';
           return Scaffold(
             appBar: const WeatherAppBar(
               title: 'Today',
@@ -61,7 +64,7 @@ class HomeScreen extends StatelessWidget {
                         Image(
                           image: NetworkImage(
                             Urls.weatherIcon(
-                              currentWeatherData.listWeather.icon,
+                              currentWeatherData.currentWeatherDataWeather.icon,
                             ),
                           ),
                         ),
@@ -76,7 +79,7 @@ class HomeScreen extends StatelessWidget {
                           height: 8,
                         ),
                         Text(
-                          '${currentWeatherData.listMain.temperature.round()}°C | ${currentWeatherData.listWeather.main}',
+                          '${currentWeatherData.currentWeatherDataMain.temperature.round()}°C | ${currentWeatherData.currentWeatherDataWeather.main}',
                           style: const TextStyle(
                             fontSize: 24,
                             fontWeight: FontWeight.bold,
@@ -90,13 +93,16 @@ class HomeScreen extends StatelessWidget {
                     width: 200,
                   ),
                   WeatherDetails(
-                    humidity: currentWeatherData.listMain.humidity,
-                    precipitation:
-                        currentWeatherData.listRain?.precipitation ?? 0.0,
-                    pressure: currentWeatherData.listMain.pressure,
-                    windSpeed: currentWeatherData.listWind.speed,
+                    humidity:
+                        currentWeatherData.currentWeatherDataMain.humidity,
+                    precipitation: currentWeatherData
+                            .currentWeatherDataRain?.precipitation ??
+                        0.0,
+                    pressure:
+                        currentWeatherData.currentWeatherDataMain.pressure,
+                    windSpeed: currentWeatherData.currentWeatherDataWind.speed,
                     windDirection: _calculateWindDirection(
-                      currentWeatherData.listWind.degrees,
+                      currentWeatherData.currentWeatherDataWind.degrees,
                     ),
                   ),
                   const AppDivider(
