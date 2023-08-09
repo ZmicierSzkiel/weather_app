@@ -4,6 +4,7 @@ class Urls {
   static String weatherIcon(String iconCode) =>
       'http://openweathermap.org/img/wn/$iconCode@2x.png';
   static String baseUrl = 'api.openweathermap.org';
+  static String baseUnencodedPath = '/data/2.5/forecast';
   static String baseLatitude = '53.9006';
   static String baseLongitude = '27.5590';
   static Map<String, String> headers = {

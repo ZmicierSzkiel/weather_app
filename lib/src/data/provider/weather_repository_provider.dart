@@ -19,7 +19,7 @@ class WeatherRepositoryProvider {
 
       final Uri uri = Uri.https(
         Urls.baseUrl,
-        '/data/2.5/forecast',
+        Urls.baseUnencodedPath,
         {
           'lat': position.latitude.toString(),
           'lon': position.longitude.toString(),
@@ -31,49 +31,55 @@ class WeatherRepositoryProvider {
         uri,
         headers: Urls.headers,
       );
-      final List<dynamic> forecastData = jsonDecode(response.body)['list'];
-      final City cityData = CityModel.fromJson(
-        jsonDecode(response.body)['city'],
-      );
-      final List<WeatherData> weatherDataList = forecastData
-          .map(
-            (e) => WeatherDataModel.fromJson(e),
-          )
-          .toList();
-      final WeatherApiResponse weatherApiResponse = WeatherApiResponse(
-        weatherDataList: weatherDataList,
-        cityData: cityData,
-      );
-      return weatherApiResponse;
+      if (response.statusCode == 200) {
+        final List<dynamic> forecastData = jsonDecode(response.body)['list'];
+        final City cityData = CityModel.fromJson(
+          jsonDecode(response.body)['city'],
+        );
+        final List<WeatherData> weatherDataList = forecastData
+            .map(
+              (e) => WeatherDataModel.fromJson(e),
+            )
+            .toList();
+        final WeatherApiResponse weatherApiResponse = WeatherApiResponse(
+          weatherDataList: weatherDataList,
+          cityData: cityData,
+        );
+        return weatherApiResponse;
+      } else {
+        final Uri uri = Uri.https(
+          Urls.baseUrl,
+          Urls.baseUnencodedPath,
+          {
+            'lat': Urls.baseLatitude,
+            'lon': Urls.baseLongitude,
+            'appid': Urls.token,
+            'units': 'metric',
+          },
+        );
+        final http.Response response = await http.get(
+          uri,
+          headers: Urls.headers,
+        );
+        final List<dynamic> forecastData = jsonDecode(response.body)['list'];
+        final City cityData = CityModel.fromJson(
+          jsonDecode(response.body)['city'],
+        );
+        final List<WeatherData> weatherDataList = forecastData
+            .map(
+              (e) => WeatherDataModel.fromJson(e),
+            )
+            .toList();
+        final WeatherApiResponse weatherApiResponse = WeatherApiResponse(
+          weatherDataList: weatherDataList,
+          cityData: cityData,
+        );
+        return weatherApiResponse;
+      }
     } catch (e) {
-      final Uri uri = Uri.https(
-        Urls.baseUrl,
-        '/data/2.5/forecast',
-        {
-          'lat': Urls.baseLatitude,
-          'lon': Urls.baseLongitude,
-          'appid': Urls.token,
-          'units': 'metric',
-        },
+      throw Exception(
+        'Failed to upload fetched data. Check your internet connection and try again',
       );
-      final http.Response response = await http.get(
-        uri,
-        headers: Urls.headers,
-      );
-      final List<dynamic> forecastData = jsonDecode(response.body)['list'];
-      final City cityData = CityModel.fromJson(
-        jsonDecode(response.body)['city'],
-      );
-      final List<WeatherData> weatherDataList = forecastData
-          .map(
-            (e) => WeatherDataModel.fromJson(e),
-          )
-          .toList();
-      final WeatherApiResponse weatherApiResponse = WeatherApiResponse(
-        weatherDataList: weatherDataList,
-        cityData: cityData,
-      );
-      return weatherApiResponse;
     }
   }
 }
