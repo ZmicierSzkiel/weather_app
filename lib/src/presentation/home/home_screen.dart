@@ -34,15 +34,34 @@ class HomeScreen extends StatelessWidget {
             appBar: const WeatherAppBar(
               title: 'Today',
             ),
-            body: Center(
-              child: Text('Error: ${state.errorMessage}'),
+            body: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Padding(
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: 20.0,
+                  ),
+                  child: Text(
+                    'Error: ${state.errorMessage}',
+                    style: const TextStyle(
+                      fontSize: 16.0,
+                    ),
+                  ),
+                ),
+                AppTextButton(
+                  onPressed: () => context.read<HomeBloc>().add(
+                        const InitEvent(),
+                      ),
+                  buttonTitle: 'Retry',
+                ),
+              ],
             ),
           );
         } else if (state.weatherDataList.isNotEmpty) {
           final WeatherData currentWeatherData = state.weatherDataList.first;
           final String message =
               '''Weather in ${state.city.name}, ${state.city.country}'''
-              ''' is ${currentWeatherData.currentWeatherDataMain.temperature}°C'''
+              ''' is ${currentWeatherData.currentWeatherDataMain.temperature.round()}°C'''
               ''' | ${currentWeatherData.currentWeatherDataWeather.main}''';
           return Scaffold(
             appBar: const WeatherAppBar(
